@@ -1,0 +1,18 @@
+RewriteEngine On
+
+# Logout
+RewriteRule ^logout$ public/logout.php [L]
+
+# URL -> public/index.php
+RewriteRule ^$ public/index.php [L]
+
+# API requests
+RewriteRule ^api/(.*)$ api/index.php [QSA,L]
+
+# Short URL redirect (6 simbolių kodas)
+RewriteRule ^([a-zA-Z0-9]{6})$ public/redirect.php?code=$1 [QSA,L]
+
+# Visi kiti URL -> public/PAVADINIMAS.php (login, register, dashboard ir t.t.)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^([a-zA-Z0-9_-]+)$ public/$1.php [L]
